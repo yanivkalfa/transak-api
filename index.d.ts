@@ -112,4 +112,4 @@ declare class SDK {
     refreshAccessToken(body: types.RefreshAccessTokenBodyParam, metadata: types.RefreshAccessTokenMetadataParam): Promise<FetchResponse<200, types.RefreshAccessTokenResponse200>>;
 }
 declare const createSDK: SDK;
-export default createSDK;
+export = createSDK;

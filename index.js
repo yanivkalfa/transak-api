@@ -1,10 +1,14 @@
-import Oas from 'oas';
-import APICore from 'api/dist/core';
-import definition from './openapi.json';
-class SDK {
-    constructor() {
-        this.spec = Oas.init(definition);
-        this.core = new APICore(this.spec, 'transak/unknown (api/6.1.2)');
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+var oas_1 = __importDefault(require("oas"));
+var core_1 = __importDefault(require("api/dist/core"));
+var openapi_json_1 = __importDefault(require("./openapi.json"));
+var SDK = /** @class */ (function () {
+    function SDK() {
+        this.spec = oas_1.default.init(openapi_json_1.default);
+        this.core = new core_1.default(this.spec, 'transak/unknown (api/6.1.2)');
     }
     /**
      * Optionally configure various options that the SDK allows.
@@ -13,9 +17,9 @@ class SDK {
      * @param config.timeout Override the default `fetch` request timeout of 30 seconds. This number
      * should be represented in milliseconds.
      */
-    config(config) {
+    SDK.prototype.config = function (config) {
         this.core.setConfig(config);
-    }
+    };
     /**
      * If the API you're using requires authentication you can supply the required credentials
      * through this method and the library will magically determine how they should be used
@@ -37,10 +41,15 @@ class SDK {
      * @see {@link https://spec.openapis.org/oas/v3.1.0#fixed-fields-22}
      * @param values Your auth credentials for the API; can specify up to two strings or numbers.
      */
-    auth(...values) {
-        this.core.setAuth(...values);
+    SDK.prototype.auth = function () {
+        var _a;
+        var values = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            values[_i] = arguments[_i];
+        }
+        (_a = this.core).setAuth.apply(_a, values);
         return this;
-    }
+    };
     /**
      * If the API you're using offers alternate server URLs, and server variables, you can tell
      * the SDK which one to use with this method. To use it you can supply either one of the
@@ -60,9 +69,10 @@ class SDK {
      * @param url Server URL
      * @param variables An object of variables to replace into the server URL.
      */
-    server(url, variables = {}) {
+    SDK.prototype.server = function (url, variables) {
+        if (variables === void 0) { variables = {}; }
         this.core.setServer(url, variables);
-    }
+    };
     /**
      * Get all the orders for the partner
      *
@@ -70,9 +80,9 @@ class SDK {
      * @throws FetchError<400, types.GetOrdersResponse400> 400
      * @throws FetchError<401, types.GetOrdersResponse401> 401
      */
-    getOrders(metadata) {
+    SDK.prototype.getOrders = function (metadata) {
         return this.core.fetch('/orders', 'get', metadata);
-    }
+    };
     /**
      * Get the order details using the Order Id
      *
@@ -80,27 +90,27 @@ class SDK {
      * @throws FetchError<400, types.GetOrderByOrderIdResponse400> 400
      * @throws FetchError<401, types.GetOrderByOrderIdResponse401> 401
      */
-    getOrderByOrderId(metadata) {
+    SDK.prototype.getOrderByOrderId = function (metadata) {
         return this.core.fetch('/order/{orderId}', 'get', metadata);
-    }
+    };
     /**
      * Get the past webhook trigger responses
      *
      * @summary Get Webhooks
      * @throws FetchError<401, types.GetWebhooksResponse401> 401
      */
-    getWebhooks(metadata) {
+    SDK.prototype.getWebhooks = function (metadata) {
         return this.core.fetch('/webhooks', 'get', metadata);
-    }
+    };
     /**
      * Test your webhook integration
      *
      * @summary Test Webhook
      * @throws FetchError<401, types.TestWebhookResponse401> 401
      */
-    testWebhook(metadata) {
+    SDK.prototype.testWebhook = function (metadata) {
         return this.core.fetch('/test-webhook', 'post', metadata);
-    }
+    };
     /**
      * Update your webhook URL
      *
@@ -108,9 +118,9 @@ class SDK {
      * @throws FetchError<400, types.UpdateWebhookResponse400> 400
      * @throws FetchError<401, types.UpdateWebhookResponse401> 401
      */
-    updateWebhook(body, metadata) {
+    SDK.prototype.updateWebhook = function (body, metadata) {
         return this.core.fetch('/update-webhook-url', 'post', body, metadata);
-    }
+    };
     /**
      * Get user data by partnerCustomerId
      *
@@ -118,9 +128,9 @@ class SDK {
      * @throws FetchError<400, types.GetUserDataResponse400> 400
      * @throws FetchError<401, types.GetUserDataResponse401> 401
      */
-    getUserData(metadata) {
+    SDK.prototype.getUserData = function (metadata) {
         return this.core.fetch('/get-user-data', 'get', metadata);
-    }
+    };
     /**
      * Refresh Access Token using api secret
      *
@@ -128,9 +138,10 @@ class SDK {
      * @throws FetchError<400, types.RefreshAccessTokenResponse400> 400
      * @throws FetchError<401, types.RefreshAccessTokenResponse401> 401
      */
-    refreshAccessToken(body, metadata) {
+    SDK.prototype.refreshAccessToken = function (body, metadata) {
         return this.core.fetch('/refresh-token', 'post', body, metadata);
-    }
-}
-const createSDK = (() => { return new SDK(); })();
-export default createSDK;
+    };
+    return SDK;
+}());
+var createSDK = (function () { return new SDK(); })();
+module.exports = createSDK;
