@@ -1,0 +1,2010 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Partner",
+    "version": "unknown"
+  },
+  "servers": [
+    {
+      "url": "https://api-stg.transak.com/partners/api/v2"
+    }
+  ],
+  "components": {
+    "securitySchemes": {}
+  },
+  "security": [
+    {}
+  ],
+  "paths": {
+    "/orders": {
+      "get": {
+        "summary": "Get Orders",
+        "description": "Get all the orders for the partner",
+        "operationId": "get-orders",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "limits the number of records returned",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "skip omits the specified number of returned records",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "startDate in YYYY-MM-DD format",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "2022-08-01"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "endDate in YYYY-MM-DD format",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "2022-09-01"
+            }
+          },
+          {
+            "name": "filter[productsAvailed]",
+            "in": "query",
+            "description": "products availed i.e., BUY or SELL",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": [
+                "[\"BUY\"]"
+              ]
+            }
+          },
+          {
+            "name": "filter[status]",
+            "in": "query",
+            "description": "order status filter",
+            "schema": {
+              "type": "string",
+              "default": "COMPLETED"
+            }
+          },
+          {
+            "name": "filter[sortOrder]",
+            "in": "query",
+            "description": "sort order by which you want your orders either desc or asc",
+            "schema": {
+              "type": "string",
+              "default": "desc"
+            }
+          },
+          {
+            "name": "access-token",
+            "in": "header",
+            "description": "Your Access Token, you can generate one using our [Refresh Token](ref:refresh-access-token) endpoint",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "YOUR_ACCESS_TOKEN"
+            }
+          },
+          {
+            "name": "filter[walletAddress]",
+            "in": "query",
+            "description": "filter orders based on a wallet address",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Buy Order": {
+                    "value": "{\n  \"meta\": {\n    \"startDate\": \"2022-06-02\",\n    \"endDate\": \"2022-06-03\",\n    \"limit\": 100,\n    \"skip\": 0,\n    \"filter\": {\n      \"productsAvailed\": [\n        \"BUY\"\n      ]\n    },\n    \"totalCount\": 1\n  },\n  \"data\": [\n    {\n      \"_id\": \"1f7e08fe-5d94-4075-aa1f-ab438b7d69b3\",\n      \"walletAddress\": \"0x5565b2a44d8A52fF6b3447e9FaA8561D5c506B10\",\n      \"createdAt\": \"2022-06-03T07:07:13.036Z\",\n      \"status\": \"ON_HOLD_PENDING_DELIVERY_FROM_TRANSAK\",\n      \"fiatCurrency\": \"GBP\",\n      \"userId\": \"41c49da2-c3fc-4b7e-827d-4422634d10cc\",\n      \"cryptoCurrency\": \"ETH\",\n      \"isBuyOrSell\": \"BUY\",\n      \"fiatAmount\": 76,\n      \"dispute\": false,\n      \"amountPaid\": 76,\n      \"paymentOptionId\": \"credit_debit_card\",\n      \"walletLink\": \"https://kovan.etherscan.io/address/0x5565b2a44d8A52fF6b3447e9FaA8561D5c506B10\",\n      \"quoteId\": \"df329dfe-a763-4fd7-b717-3450becb610a\",\n      \"addressAdditionalData\": false,\n      \"network\": \"polygon\",\n      \"appVersionName\": \"local-development\",\n      \"conversionPrice\": 0.000691333244110728,\n      \"cryptoAmount\": 0.05101348,\n      \"totalFeeInFiat\": 2.21,\n      \"totalfeeDecimal\": 0.0290789473684211,\n      \"fiatAmountInUsd\": 95.51,\n      \"referenceCode\": 128916,\n      \"paymentOptions\": [],\n      \"fromWalletAddress\": \"0x085ee67132ec4297b85ed5d1b4c65424d36fda7d\",\n      \"isPaymentProcessing\": false,\n      \"autoExpiresAt\": \"2022-06-03T07:52:13+00:00\",\n      \"partnerApiKey\": \"69feba7f-a1c2-4cfa-a9bd-43072768b0e6\",\n      \"liquidityProvider\": \"CHECKOUT\",\n      \"id\": \"1f7e08fe-5d94-4075-aa1f-ab438b7d69b3\",\n      \"slackThreadId\": \"1654240034.663239\",\n      \"statusHistories\": [\n        {\n          \"status\": \"AWAITING_PAYMENT_FROM_USER\",\n          \"createdAt\": \"2022-06-03T07:07:14.772Z\",\n          \"message\": \"*📦 New order by Test Test* \\n*Order Id:* 1f7e08fe-5d94-4075-aa1f-ab438b7d69b3\\n*Email:* atharvakale01+test1@gmail.com\\n*Crypto Amount:* 0.05101348 ETH\\n*Fiat Amount:* 76 GBP\\n*Payment Method:*  credit_debit_card\\n*Liquidity Provider*  CHECKOUT\\n*Wallet Address:* 0x5565b2a44d8A52fF6b3447e9FaA8561D5c506B10\\n*Reference Code:* 128916 \\n*Partner name:* TransakLegend\",\n          \"isEmailSentToUser\": false,\n          \"partnerEventId\": \"ORDER_CREATED\"\n        },\n        {\n          \"status\": \"PROCESSING\",\n          \"createdAt\": \"2022-06-03T07:07:27.354Z\",\n          \"message\": \"*💸 Payment reconciled successfully. Received 76 GBP\",\n          \"isEmailSentToUser\": false,\n          \"partnerEventId\": \"ORDER_PROCESSING\"\n        },\n        {\n          \"status\": \"PENDING_DELIVERY_FROM_TRANSAK\",\n          \"createdAt\": \"2022-06-03T07:26:38.355Z\",\n          \"message\": \"*💸 Payment reconciled successfully. Received 76 GBP\",\n          \"isEmailSentToUser\": false,\n          \"partnerEventId\": \"ORDER_PROCESSING\"\n        }\n      ],\n      \"paymentTnxId\": \"6299b3215124d567cfca5725\",\n      \"paymentdateTime\": \"2022-06-03T07:26:37.832Z\",\n      \"partnerFeeInUsd\": \"1.37\",\n      \"partnerFeeDecimal\": 0.0143421052631579\n    }\n  ]\n}"
+                  },
+                  "Sell Order": {
+                    "value": "{\n  \"meta\": {\n    \"startDate\": \"2022-06-22\",\n    \"endDate\": \"2022-07-22\",\n    \"limit\": 100,\n    \"skip\": 0,\n    \"filter\": {\n      \"productsAvailed\": [\n        \"SELL\"\n      ]\n    },\n    \"totalCount\": 1\n  },\n  \"data\": [\n    {\n      \"_id\": \"335f43f0-8152-43ae-b364-c3a16d67d71c\",\n      \"createdAt\": \"2022-07-04T13:03:47.985Z\",\n      \"status\": \"COMPLETED\",\n      \"fiatCurrency\": \"EUR\",\n      \"userId\": \"7031ada0-2a23-42d2-94b8-62ddf3920b67\",\n      \"cryptoCurrency\": \"ETH\",\n      \"isBuyOrSell\": \"SELL\",\n      \"fiatAmount\": 69.29,\n      \"dispute\": false,\n      \"amountPaid\": 69.29,\n      \"paymentOptionId\": \"sepa_bank_transfer\",\n      \"quoteId\": \"5e822839-cef5-4a11-a90b-398f40326105\",\n      \"bankId\": \"246aadfc-e06e-4f7c-9e54-302679f39688\",\n      \"addressAdditionalData\": false,\n      \"network\": \"ethereum\",\n      \"appVersionName\": \"production-api\",\n      \"conversionPrice\": 0.000947751912890039,\n      \"cryptoAmount\": 0.07,\n      \"totalFeeInFiat\": 4.57,\n      \"totalfeeDecimal\": 0.0618746605986782,\n      \"fiatAmountInUsd\": 72.12,\n      \"referenceCode\": 976899,\n      \"paymentOptions\": [],\n      \"isPaymentProcessing\": false,\n      \"autoExpiresAt\": \"2022-07-04T14:03:47+00:00\",\n      \"partnerApiKey\": \"02624956-010b-4775-8e31-7b9c8b82df76\",\n      \"cryptoPaymentData\": {\n        \"paymentAddress\": \"0x71Cf091896A79772Ea9A0BC4c11CE9138e0f82aB\",\n        \"address\": \"0x71Cf091896A79772Ea9A0BC4c11CE9138e0f82aB\",\n        \"cryptoAmountPaid\": 0.06\n      },\n      \"bankAccountDetails\": {\n        \"id\": \"246aadfc-e06e-4f7c-9e54-302679f39688\",\n        \"createdAt\": \"2022-06-15T08:42:06.439Z\",\n        \"userId\": \"7031ada0-2a23-42d2-94b8-62ddf3920b67\",\n        \"detailsType\": \"iban\",\n        \"isVerified\": false,\n        \"iban\": \"IT60*******************3456\"\n      },\n      \"id\": \"335f43f0-8152-43ae-b364-c3a16d67d71c\",\n      \"slackThreadId\": \"1656939831.053709\",\n      \"statusHistories\": [\n        {\n          \"status\": \"AWAITING_PAYMENT_FROM_USER\",\n          \"createdAt\": \"2022-07-04T13:03:51.120Z\",\n          \"message\": \"*📦 New sell order by wer wer* \\n*Order Id:* 335f43f0-8152-43ae-b364-c3a16d67d71c\\n*Email:* amitrath+test1@transak.com\\n*Crypto Amount:* 0.07 ETH\\n*Fiat Amount:* 69.29 EUR\\n*Payment Method:* sepa_bank_transfer\\n*Wallet Address:* 0x71Cf091896A79772Ea9A0BC4c11CE9138e0f82aB \\n*Partner name:* TransakLegend\",\n          \"isEmailSentToUser\": true,\n          \"partnerEventId\": \"ORDER_CREATED\"\n        },\n        {\n          \"status\": \"PENDING_DELIVERY_FROM_TRANSAK\",\n          \"createdAt\": \"2022-07-04T13:03:55.302Z\",\n          \"message\": \"*💸 Payment reconciled successfully. Received 0.07 ETH\",\n          \"isEmailSentToUser\": false,\n          \"partnerEventId\": \"ORDER_PROCESSING\"\n        },\n        {\n          \"status\": \"COMPLETED\",\n          \"createdAt\": \"2022-07-04T13:04:26.490Z\",\n          \"message\": \"69.29 EUR sent successfully to wer wer in their IBAN account number IT60X0542811101000000123456. Transaction id: T12003UURK. As received from Modulr\",\n          \"isEmailSentToUser\": true,\n          \"partnerEventId\": \"ORDER_COMPLETED\"\n        }\n      ],\n      \"liquidityProviderData\": \"Modulr\",\n      \"paymentMarkedAt\": \"2022-07-04T13:03:54.520Z\",\n      \"paymentTnxId\": \"8514b072-934b-4a18-9d2d-eecff8b0f9a1\",\n      \"paymentdateTime\": \"2022-07-04T13:03:54.520Z\",\n      \"paymentProcessingAt\": \"2022-07-04T13:03:59.894Z\",\n      \"updatedAt\": \"2022-07-04T13:04:02.629Z\",\n      \"fiatAmountPaid\": 69.28,\n      \"payoutFiatData\": {\n        \"payoutType\": \"Bank\",\n        \"payoutMethod\": \"62b1a3e2e91bf6c489510b0f\",\n        \"payoutCurrency\": \"EUR\",\n        \"payoutDetails\": {\n          \"_id\": \"246aadfc-e06e-4f7c-9e54-302679f39688\",\n          \"createdAt\": \"2022-06-15T08:42:06.439Z\",\n          \"userId\": \"7031ada0-2a23-42d2-94b8-62ddf3920b67\",\n          \"detailsType\": \"iban\",\n          \"isDefault\": true,\n          \"isVerified\": false,\n          \"disabled\": false,\n          \"iban\": \"IT60X0542811101000000123456\"\n        }\n      },\n      \"payoutFiatTransactionId\": \"P12004UJ0Z\",\n      \"payoutFiatTransactionCreatedAt\": \"2022-07-04T13:04:03.420Z\",\n      \"completedAt\": \"2022-07-04T13:04:26.490Z\",\n      \"userPayoutFiatTransactionId\": \"T12003UURK\",\n      \"partnerFeeInUsd\": \"1.03\",\n      \"partnerFeeDecimal\": 0.0142877760138548\n    }\n  ]\n}"
+                  }
+                },
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Buy Order",
+                      "type": "object",
+                      "properties": {
+                        "meta": {
+                          "type": "object",
+                          "properties": {
+                            "startDate": {
+                              "type": "string",
+                              "example": "2022-06-02"
+                            },
+                            "endDate": {
+                              "type": "string",
+                              "example": "2022-06-03"
+                            },
+                            "limit": {
+                              "type": "integer",
+                              "example": 100,
+                              "default": 0
+                            },
+                            "skip": {
+                              "type": "integer",
+                              "example": 0,
+                              "default": 0
+                            },
+                            "filter": {
+                              "type": "object",
+                              "properties": {
+                                "productsAvailed": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "example": "BUY"
+                                  }
+                                }
+                              }
+                            },
+                            "totalCount": {
+                              "type": "integer",
+                              "example": 1,
+                              "default": 0
+                            }
+                          }
+                        },
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "example": "1f7e08fe-5d94-4075-aa1f-ab438b7d69b3"
+                              },
+                              "walletAddress": {
+                                "type": "string",
+                                "example": "0x5565b2a44d8A52fF6b3447e9FaA8561D5c506B10"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "example": "2022-06-03T07:07:13.036Z"
+                              },
+                              "status": {
+                                "type": "string",
+                                "example": "ON_HOLD_PENDING_DELIVERY_FROM_TRANSAK"
+                              },
+                              "fiatCurrency": {
+                                "type": "string",
+                                "example": "GBP"
+                              },
+                              "userId": {
+                                "type": "string",
+                                "example": "41c49da2-c3fc-4b7e-827d-4422634d10cc"
+                              },
+                              "cryptoCurrency": {
+                                "type": "string",
+                                "example": "ETH"
+                              },
+                              "isBuyOrSell": {
+                                "type": "string",
+                                "example": "BUY"
+                              },
+                              "fiatAmount": {
+                                "type": "integer",
+                                "example": 76,
+                                "default": 0
+                              },
+                              "dispute": {
+                                "type": "boolean",
+                                "example": false,
+                                "default": true
+                              },
+                              "amountPaid": {
+                                "type": "integer",
+                                "example": 76,
+                                "default": 0
+                              },
+                              "paymentOptionId": {
+                                "type": "string",
+                                "example": "credit_debit_card"
+                              },
+                              "walletLink": {
+                                "type": "string",
+                                "example": "https://kovan.etherscan.io/address/0x5565b2a44d8A52fF6b3447e9FaA8561D5c506B10"
+                              },
+                              "quoteId": {
+                                "type": "string",
+                                "example": "df329dfe-a763-4fd7-b717-3450becb610a"
+                              },
+                              "addressAdditionalData": {
+                                "type": "boolean",
+                                "example": false,
+                                "default": true
+                              },
+                              "network": {
+                                "type": "string",
+                                "example": "polygon"
+                              },
+                              "appVersionName": {
+                                "type": "string",
+                                "example": "local-development"
+                              },
+                              "conversionPrice": {
+                                "type": "number",
+                                "example": 0.000691333244110728,
+                                "default": 0
+                              },
+                              "cryptoAmount": {
+                                "type": "number",
+                                "example": 0.05101348,
+                                "default": 0
+                              },
+                              "totalFeeInFiat": {
+                                "type": "number",
+                                "example": 2.21,
+                                "default": 0
+                              },
+                              "totalfeeDecimal": {
+                                "type": "number",
+                                "example": 0.0290789473684211,
+                                "default": 0
+                              },
+                              "fiatAmountInUsd": {
+                                "type": "number",
+                                "example": 95.51,
+                                "default": 0
+                              },
+                              "referenceCode": {
+                                "type": "integer",
+                                "example": 128916,
+                                "default": 0
+                              },
+                              "paymentOptions": {
+                                "type": "array"
+                              },
+                              "fromWalletAddress": {
+                                "type": "string",
+                                "example": "0x085ee67132ec4297b85ed5d1b4c65424d36fda7d"
+                              },
+                              "isPaymentProcessing": {
+                                "type": "boolean",
+                                "example": false,
+                                "default": true
+                              },
+                              "autoExpiresAt": {
+                                "type": "string",
+                                "example": "2022-06-03T07:52:13+00:00"
+                              },
+                              "partnerApiKey": {
+                                "type": "string",
+                                "example": "69feba7f-a1c2-4cfa-a9bd-43072768b0e6"
+                              },
+                              "liquidityProvider": {
+                                "type": "string",
+                                "example": "CHECKOUT"
+                              },
+                              "id": {
+                                "type": "string",
+                                "example": "1f7e08fe-5d94-4075-aa1f-ab438b7d69b3"
+                              },
+                              "slackThreadId": {
+                                "type": "string",
+                                "example": "1654240034.663239"
+                              },
+                              "statusHistories": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "status": {
+                                      "type": "string",
+                                      "example": "AWAITING_PAYMENT_FROM_USER"
+                                    },
+                                    "createdAt": {
+                                      "type": "string",
+                                      "example": "2022-06-03T07:07:14.772Z"
+                                    },
+                                    "message": {
+                                      "type": "string",
+                                      "example": "*📦 New order by Test Test* \n*Order Id:* 1f7e08fe-5d94-4075-aa1f-ab438b7d69b3\n*Email:* atharvakale01+test1@gmail.com\n*Crypto Amount:* 0.05101348 ETH\n*Fiat Amount:* 76 GBP\n*Payment Method:*  credit_debit_card\n*Liquidity Provider*  CHECKOUT\n*Wallet Address:* 0x5565b2a44d8A52fF6b3447e9FaA8561D5c506B10\n*Reference Code:* 128916 \n*Partner name:* TransakLegend"
+                                    },
+                                    "isEmailSentToUser": {
+                                      "type": "boolean",
+                                      "example": false,
+                                      "default": true
+                                    },
+                                    "partnerEventId": {
+                                      "type": "string",
+                                      "example": "ORDER_CREATED"
+                                    }
+                                  }
+                                }
+                              },
+                              "paymentTnxId": {
+                                "type": "string",
+                                "example": "6299b3215124d567cfca5725"
+                              },
+                              "paymentdateTime": {
+                                "type": "string",
+                                "example": "2022-06-03T07:26:37.832Z"
+                              },
+                              "partnerFeeInUsd": {
+                                "type": "string",
+                                "example": "1.37"
+                              },
+                              "partnerFeeDecimal": {
+                                "type": "number",
+                                "example": 0.0143421052631579,
+                                "default": 0
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "title": "Sell Order",
+                      "type": "object",
+                      "properties": {
+                        "meta": {
+                          "type": "object",
+                          "properties": {
+                            "startDate": {
+                              "type": "string",
+                              "example": "2022-06-22"
+                            },
+                            "endDate": {
+                              "type": "string",
+                              "example": "2022-07-22"
+                            },
+                            "limit": {
+                              "type": "integer",
+                              "example": 100,
+                              "default": 0
+                            },
+                            "skip": {
+                              "type": "integer",
+                              "example": 0,
+                              "default": 0
+                            },
+                            "filter": {
+                              "type": "object",
+                              "properties": {
+                                "productsAvailed": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "example": "SELL"
+                                  }
+                                }
+                              }
+                            },
+                            "totalCount": {
+                              "type": "integer",
+                              "example": 1,
+                              "default": 0
+                            }
+                          }
+                        },
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "example": "335f43f0-8152-43ae-b364-c3a16d67d71c"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "example": "2022-07-04T13:03:47.985Z"
+                              },
+                              "status": {
+                                "type": "string",
+                                "example": "COMPLETED"
+                              },
+                              "fiatCurrency": {
+                                "type": "string",
+                                "example": "EUR"
+                              },
+                              "userId": {
+                                "type": "string",
+                                "example": "7031ada0-2a23-42d2-94b8-62ddf3920b67"
+                              },
+                              "cryptoCurrency": {
+                                "type": "string",
+                                "example": "ETH"
+                              },
+                              "isBuyOrSell": {
+                                "type": "string",
+                                "example": "SELL"
+                              },
+                              "fiatAmount": {
+                                "type": "number",
+                                "example": 69.29,
+                                "default": 0
+                              },
+                              "dispute": {
+                                "type": "boolean",
+                                "example": false,
+                                "default": true
+                              },
+                              "amountPaid": {
+                                "type": "number",
+                                "example": 69.29,
+                                "default": 0
+                              },
+                              "paymentOptionId": {
+                                "type": "string",
+                                "example": "sepa_bank_transfer"
+                              },
+                              "quoteId": {
+                                "type": "string",
+                                "example": "5e822839-cef5-4a11-a90b-398f40326105"
+                              },
+                              "bankId": {
+                                "type": "string",
+                                "example": "246aadfc-e06e-4f7c-9e54-302679f39688"
+                              },
+                              "addressAdditionalData": {
+                                "type": "boolean",
+                                "example": false,
+                                "default": true
+                              },
+                              "network": {
+                                "type": "string",
+                                "example": "ethereum"
+                              },
+                              "appVersionName": {
+                                "type": "string",
+                                "example": "production-api"
+                              },
+                              "conversionPrice": {
+                                "type": "number",
+                                "example": 0.000947751912890039,
+                                "default": 0
+                              },
+                              "cryptoAmount": {
+                                "type": "number",
+                                "example": 0.07,
+                                "default": 0
+                              },
+                              "totalFeeInFiat": {
+                                "type": "number",
+                                "example": 4.57,
+                                "default": 0
+                              },
+                              "totalfeeDecimal": {
+                                "type": "number",
+                                "example": 0.0618746605986782,
+                                "default": 0
+                              },
+                              "fiatAmountInUsd": {
+                                "type": "number",
+                                "example": 72.12,
+                                "default": 0
+                              },
+                              "referenceCode": {
+                                "type": "integer",
+                                "example": 976899,
+                                "default": 0
+                              },
+                              "paymentOptions": {
+                                "type": "array"
+                              },
+                              "isPaymentProcessing": {
+                                "type": "boolean",
+                                "example": false,
+                                "default": true
+                              },
+                              "autoExpiresAt": {
+                                "type": "string",
+                                "example": "2022-07-04T14:03:47+00:00"
+                              },
+                              "partnerApiKey": {
+                                "type": "string",
+                                "example": "02624956-010b-4775-8e31-7b9c8b82df76"
+                              },
+                              "cryptoPaymentData": {
+                                "type": "object",
+                                "properties": {
+                                  "paymentAddress": {
+                                    "type": "string",
+                                    "example": "0x71Cf091896A79772Ea9A0BC4c11CE9138e0f82aB"
+                                  },
+                                  "address": {
+                                    "type": "string",
+                                    "example": "0x71Cf091896A79772Ea9A0BC4c11CE9138e0f82aB"
+                                  },
+                                  "cryptoAmountPaid": {
+                                    "type": "number",
+                                    "example": 0.06,
+                                    "default": 0
+                                  }
+                                }
+                              },
+                              "bankAccountDetails": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "example": "246aadfc-e06e-4f7c-9e54-302679f39688"
+                                  },
+                                  "createdAt": {
+                                    "type": "string",
+                                    "example": "2022-06-15T08:42:06.439Z"
+                                  },
+                                  "userId": {
+                                    "type": "string",
+                                    "example": "7031ada0-2a23-42d2-94b8-62ddf3920b67"
+                                  },
+                                  "detailsType": {
+                                    "type": "string",
+                                    "example": "iban"
+                                  },
+                                  "isVerified": {
+                                    "type": "boolean",
+                                    "example": false,
+                                    "default": true
+                                  },
+                                  "iban": {
+                                    "type": "string",
+                                    "example": "IT60*******************3456"
+                                  }
+                                }
+                              },
+                              "id": {
+                                "type": "string",
+                                "example": "335f43f0-8152-43ae-b364-c3a16d67d71c"
+                              },
+                              "slackThreadId": {
+                                "type": "string",
+                                "example": "1656939831.053709"
+                              },
+                              "statusHistories": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "status": {
+                                      "type": "string",
+                                      "example": "AWAITING_PAYMENT_FROM_USER"
+                                    },
+                                    "createdAt": {
+                                      "type": "string",
+                                      "example": "2022-07-04T13:03:51.120Z"
+                                    },
+                                    "message": {
+                                      "type": "string",
+                                      "example": "*📦 New sell order by wer wer* \n*Order Id:* 335f43f0-8152-43ae-b364-c3a16d67d71c\n*Email:* amitrath+test1@transak.com\n*Crypto Amount:* 0.07 ETH\n*Fiat Amount:* 69.29 EUR\n*Payment Method:* sepa_bank_transfer\n*Wallet Address:* 0x71Cf091896A79772Ea9A0BC4c11CE9138e0f82aB \n*Partner name:* TransakLegend"
+                                    },
+                                    "isEmailSentToUser": {
+                                      "type": "boolean",
+                                      "example": true,
+                                      "default": true
+                                    },
+                                    "partnerEventId": {
+                                      "type": "string",
+                                      "example": "ORDER_CREATED"
+                                    }
+                                  }
+                                }
+                              },
+                              "liquidityProviderData": {
+                                "type": "string",
+                                "example": "Modulr"
+                              },
+                              "paymentMarkedAt": {
+                                "type": "string",
+                                "example": "2022-07-04T13:03:54.520Z"
+                              },
+                              "paymentTnxId": {
+                                "type": "string",
+                                "example": "8514b072-934b-4a18-9d2d-eecff8b0f9a1"
+                              },
+                              "paymentdateTime": {
+                                "type": "string",
+                                "example": "2022-07-04T13:03:54.520Z"
+                              },
+                              "paymentProcessingAt": {
+                                "type": "string",
+                                "example": "2022-07-04T13:03:59.894Z"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "example": "2022-07-04T13:04:02.629Z"
+                              },
+                              "fiatAmountPaid": {
+                                "type": "number",
+                                "example": 69.28,
+                                "default": 0
+                              },
+                              "payoutFiatData": {
+                                "type": "object",
+                                "properties": {
+                                  "payoutType": {
+                                    "type": "string",
+                                    "example": "Bank"
+                                  },
+                                  "payoutMethod": {
+                                    "type": "string",
+                                    "example": "62b1a3e2e91bf6c489510b0f"
+                                  },
+                                  "payoutCurrency": {
+                                    "type": "string",
+                                    "example": "EUR"
+                                  },
+                                  "payoutDetails": {
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string",
+                                        "example": "246aadfc-e06e-4f7c-9e54-302679f39688"
+                                      },
+                                      "createdAt": {
+                                        "type": "string",
+                                        "example": "2022-06-15T08:42:06.439Z"
+                                      },
+                                      "userId": {
+                                        "type": "string",
+                                        "example": "7031ada0-2a23-42d2-94b8-62ddf3920b67"
+                                      },
+                                      "detailsType": {
+                                        "type": "string",
+                                        "example": "iban"
+                                      },
+                                      "isDefault": {
+                                        "type": "boolean",
+                                        "example": true,
+                                        "default": true
+                                      },
+                                      "isVerified": {
+                                        "type": "boolean",
+                                        "example": false,
+                                        "default": true
+                                      },
+                                      "disabled": {
+                                        "type": "boolean",
+                                        "example": false,
+                                        "default": true
+                                      },
+                                      "iban": {
+                                        "type": "string",
+                                        "example": "IT60X0542811101000000123456"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "payoutFiatTransactionId": {
+                                "type": "string",
+                                "example": "P12004UJ0Z"
+                              },
+                              "payoutFiatTransactionCreatedAt": {
+                                "type": "string",
+                                "example": "2022-07-04T13:04:03.420Z"
+                              },
+                              "completedAt": {
+                                "type": "string",
+                                "example": "2022-07-04T13:04:26.490Z"
+                              },
+                              "userPayoutFiatTransactionId": {
+                                "type": "string",
+                                "example": "T12003UURK"
+                              },
+                              "partnerFeeInUsd": {
+                                "type": "string",
+                                "example": "1.03"
+                              },
+                              "partnerFeeDecimal": {
+                                "type": "number",
+                                "example": 0.0142877760138548,
+                                "default": 0
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Required Argument": {
+                    "value": "{\n  \"error\": {\n    \"statusCode\": 400,\n    \"name\": \"Error\",\n    \"message\": \"startDate is a required argument\"\n  }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "statusCode": {
+                          "type": "integer",
+                          "example": 400,
+                          "default": 0
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Error"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "startDate is a required argument"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "401",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n  \"error\": {\n    \"statusCode\": 401,\n    \"name\": \"Unauthorized\",\n    \"message\": \"Authorization Required\"\n  }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "statusCode": {
+                          "type": "integer",
+                          "example": 401,
+                          "default": 0
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Unauthorized"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Authorization Required"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/order/{orderId}": {
+      "get": {
+        "summary": "Get Order By ID",
+        "description": "Get the order details using the Order Id",
+        "operationId": "get-order-by-order-id",
+        "parameters": [
+          {
+            "name": "access-token",
+            "in": "header",
+            "description": "Your Access Token, you can generate one using our [Refresh Token](ref:refresh-access-token) endpoint",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "YOUR_ACCESS_TOKEN"
+            }
+          },
+          {
+            "name": "orderId",
+            "in": "path",
+            "description": "User order ID",
+            "schema": {
+              "type": "string",
+              "default": "YOUR_CUSTOMER_ORDER_ID"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Success": {
+                    "value": "{\n  \"meta\": {\n    \"orderId\": \"cd09b401-a036-462e-d09b4-cd09b401\"\n  },\n  \"data\": {\n    \"id\": \"cd09b401-a036-462e-d09b4-cd09b401\",\n    \"walletAddress\": \"0x000389830900e9000000wd000\",\n    \"createdAt\": \"2021-06-26T04:17:08.892Z\",\n    \"status\": \"EXPIRED\",\n    \"fiatCurrency\": \"USD\",\n    \"cryptoCurrency\": \"ETH\",\n    \"isBuyOrSell\": \"BUY\",\n    \"fiatAmount\": 100,\n    \"walletLink\": \"https://kovan.etherscan.io/address/0x000389830900e9000000wd000\",\n    \"paymentOptionId\": \"credit_debit_card\",\n    \"quoteId\": \"9876543-abcd-0078-kgfd-12345678890\",\n    \"addressAdditionalData\": false,\n    \"network\": \"ethereum\",\n    \"cryptocurrency\": \"ETH\",\n    \"amountPaid\": 0,\n    \"referenceCode\": 458883,\n    \"conversionPrice\": 0.0005205222853619762,\n    \"cryptoAmount\": 0.04244859,\n    \"totalFeeInFiat\": 18.45,\n    \"fiatAmountInUsd\": 100,\n    \"paymentOptions\": [],\n    \"autoExpiresAt\": \"2021-06-26T05:02:08+00:00\",\n    \"fromWalletAddress\": false\n  }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "orderId": {
+                          "type": "string",
+                          "example": "cd09b401-a036-462e-d09b4-cd09b401"
+                        }
+                      }
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "cd09b401-a036-462e-d09b4-cd09b401"
+                        },
+                        "walletAddress": {
+                          "type": "string",
+                          "example": "0x000389830900e9000000wd000"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2021-06-26T04:17:08.892Z"
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "EXPIRED"
+                        },
+                        "fiatCurrency": {
+                          "type": "string",
+                          "example": "USD"
+                        },
+                        "cryptoCurrency": {
+                          "type": "string",
+                          "example": "ETH"
+                        },
+                        "isBuyOrSell": {
+                          "type": "string",
+                          "example": "BUY"
+                        },
+                        "fiatAmount": {
+                          "type": "integer",
+                          "example": 100,
+                          "default": 0
+                        },
+                        "walletLink": {
+                          "type": "string",
+                          "example": "https://kovan.etherscan.io/address/0x000389830900e9000000wd000"
+                        },
+                        "paymentOptionId": {
+                          "type": "string",
+                          "example": "credit_debit_card"
+                        },
+                        "quoteId": {
+                          "type": "string",
+                          "example": "9876543-abcd-0078-kgfd-12345678890"
+                        },
+                        "addressAdditionalData": {
+                          "type": "boolean",
+                          "example": false,
+                          "default": true
+                        },
+                        "network": {
+                          "type": "string",
+                          "example": "ethereum"
+                        },
+                        "cryptocurrency": {
+                          "type": "string",
+                          "example": "ETH"
+                        },
+                        "amountPaid": {
+                          "type": "integer",
+                          "example": 0,
+                          "default": 0
+                        },
+                        "referenceCode": {
+                          "type": "integer",
+                          "example": 458883,
+                          "default": 0
+                        },
+                        "conversionPrice": {
+                          "type": "number",
+                          "example": 0.0005205222853619762,
+                          "default": 0
+                        },
+                        "cryptoAmount": {
+                          "type": "number",
+                          "example": 0.04244859,
+                          "default": 0
+                        },
+                        "totalFeeInFiat": {
+                          "type": "number",
+                          "example": 18.45,
+                          "default": 0
+                        },
+                        "fiatAmountInUsd": {
+                          "type": "integer",
+                          "example": 100,
+                          "default": 0
+                        },
+                        "paymentOptions": {
+                          "type": "array"
+                        },
+                        "autoExpiresAt": {
+                          "type": "string",
+                          "example": "2021-06-26T05:02:08+00:00"
+                        },
+                        "fromWalletAddress": {
+                          "type": "boolean",
+                          "example": false,
+                          "default": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Order Not Found": {
+                    "value": "{\n  \"error\": {\n    \"statusCode\": 400,\n    \"name\": \"Bad Request\",\n    \"message\": \"Order not found\"\n  }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "statusCode": {
+                          "type": "integer",
+                          "example": 400,
+                          "default": 0
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Bad Request"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Order not found"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "401",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Unauthorized": {
+                    "value": "{\n  \"error\": {\n    \"statusCode\": 401,\n    \"name\": \"Unauthorized\",\n    \"message\": \"Authorization Required\"\n  }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "statusCode": {
+                          "type": "integer",
+                          "example": 401,
+                          "default": 0
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Unauthorized"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Authorization Required"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/webhooks": {
+      "get": {
+        "summary": "Get Webhooks",
+        "description": "Get the past webhook trigger responses",
+        "operationId": "get-webhooks",
+        "parameters": [
+          {
+            "name": "access-token",
+            "in": "header",
+            "description": "Your Access Token, you can generate one using our [Refresh Token](ref:refresh-access-token) endpoint",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "YOUR_ACCESS_TOKEN"
+            }
+          },
+          {
+            "name": "eventID",
+            "in": "query",
+            "description": "Filter by event id (ORDER_COMPLETED, ORDER_CANCELLED, ORDER_CREATED, ORDER_FAILED, ORDER_PROCESSING,ORDER_PAYMENT_VERIFYING))",
+            "schema": {
+              "type": "string",
+              "default": "ORDER_COMPLETED"
+            }
+          },
+          {
+            "name": "orderID",
+            "in": "query",
+            "description": "Filter by order id",
+            "schema": {
+              "type": "string",
+              "default": "YOUR_CUSTOMER_ORDER_ID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Success": {
+                    "value": "{\n  \"meta\": {},\n  \"data\": [\n    {\n      \"partnerApiKey\": \"cd09b401-a036-462e-d09b4-cd09b401\",\n      \"createdAt\": \"2020-02-21T02:32:44.914Z\",\n      \"eventID\": \"ORDER_CREATED\",\n      \"webhookData\": {\n        \"id\": \"cd09b401-a036-462e-d09b4-cd09b401\",\n        \"walletAddress\": \"0x000389830900e9000000wd000\",\n        \"createdAt\": \"2020-02-21T02:32:44.822Z\",\n        \"status\": \"AWAITING_PAYMENT_FROM_USER\",\n        \"fiatCurrency\": \"INR\",\n        \"userId\": \"cd09b401-a036-462e-d09b4-cd09b401\",\n        \"cryptocurrency\": \"CDAI\",\n        \"isBuyOrSell\": \"BUY\",\n        \"fiatAmount\": 1500,\n        \"commissionDecimal\": 0.0075,\n        \"fromWalletAddress\": \"0x000389830900e9000000wd000\",\n        \"walletLink\": \"https://kovan.etherscan.io/address/0x000389830900e9000000wd000\",\n        \"amountPaid\": 0,\n        \"conversionPrice\": 0.6481680505382411,\n        \"cryptoAmount\": 964.96,\n        \"totalFee\": 7.291890568555212,\n        \"paymentOption\": [\n          {\n            \"currency\": \"INR\",\n            \"provider\": \"upi\",\n            \"name\": \"UPI\",\n            \"fields\": [\n              {\n                \"name\": \"UPI / VPA Id\",\n                \"value\": \"1234567890@paytm\"\n              }\n            ]\n          },\n          {\n            \"currency\": \"INR\",\n            \"provider\": \"bankaccount\",\n            \"name\": \"Bank Transfer\",\n            \"fields\": [\n              {\n                \"name\": \"Name\",\n                \"value\": \"Demo Account\"\n              },\n              {\n                \"name\": \"Account Number\",\n                \"value\": \"1234567890\"\n              },\n              {\n                \"name\": \"IFSC Code\",\n                \"value\": \"PYTM0123456\"\n              },\n              {\n                \"name\": \"Account Type\",\n                \"value\": \"Savings\"\n              }\n            ]\n          }\n        ],\n        \"autoExpiresAt\": \"2020-02-21T03:32:44+00:00\",\n        \"referenceCode\": 554579\n      },\n      \"webhookResponse\": {\n        \"statusCode\": 405,\n        \"body\": \"<!DOCTYPE html>\\n<html lang=en>\\n  <meta charset=utf-8>\\n  <meta name=viewport content=\\\"initial-scale=1, minimum-scale=1, width=device-width\\\">\\n  <title>Error 405 (Method Not Allowed)!!1</title>\\n  <style>\\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\\n  </style>\\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\\n  <p><b>405.</b> <ins>That’s an error.</ins>\\n  <p>The request method <code>POST</code> is inappropriate for the URL <code>/</code>.  <ins>That’s all we know.</ins>\\n\",\n        \"headers\": {\n          \"allow\": \"GET, HEAD\",\n          \"date\": \"Fri, 21 Feb 2020 02:32:44 GMT\",\n          \"content-type\": \"text/html; charset=UTF-8\",\n          \"server\": \"gws\",\n          \"content-length\": \"1589\",\n          \"x-xss-protection\": \"0\",\n          \"x-frame-options\": \"SAMEORIGIN\",\n          \"alt-svc\": \"quic=\\\":443\\\"; ma=2592000; v=\\\"46,43\\\",h3-Q050=\\\":443\\\"; ma=2592000,h3-Q049=\\\":443\\\"; ma=2592000,h3-Q048=\\\":443\\\"; ma=2592000,h3-Q046=\\\":443\\\"; ma=2592000,h3-Q043=\\\":443\\\"; ma=2592000\",\n          \"connection\": \"close\"\n        },\n        \"request\": {\n          \"uri\": {\n            \"protocol\": \"https:\",\n            \"slashes\": true,\n            \"auth\": null,\n            \"host\": \"google.com\",\n            \"port\": 443,\n            \"hostname\": \"google.com\",\n            \"hash\": null,\n            \"search\": null,\n            \"query\": null,\n            \"pathname\": \"/\",\n            \"path\": \"/\",\n            \"href\": \"https://google.com/\"\n          },\n          \"method\": \"POST\",\n          \"headers\": {\n            \"accept\": \"application/json\",\n            \"content-type\": \"application/json\",\n            \"content-length\": 1596\n          }\n        }\n      },\n      \"id\": \"cd09b401-a036-462e-d09b4-cd09b401\"\n    }\n  ]\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "meta": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "partnerApiKey": {
+                            "type": "string",
+                            "example": "cd09b401-a036-462e-d09b4-cd09b401"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2020-02-21T02:32:44.914Z"
+                          },
+                          "eventID": {
+                            "type": "string",
+                            "example": "ORDER_CREATED"
+                          },
+                          "webhookData": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "example": "cd09b401-a036-462e-d09b4-cd09b401"
+                              },
+                              "walletAddress": {
+                                "type": "string",
+                                "example": "0x000389830900e9000000wd000"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "example": "2020-02-21T02:32:44.822Z"
+                              },
+                              "status": {
+                                "type": "string",
+                                "example": "AWAITING_PAYMENT_FROM_USER"
+                              },
+                              "fiatCurrency": {
+                                "type": "string",
+                                "example": "INR"
+                              },
+                              "userId": {
+                                "type": "string",
+                                "example": "cd09b401-a036-462e-d09b4-cd09b401"
+                              },
+                              "cryptocurrency": {
+                                "type": "string",
+                                "example": "CDAI"
+                              },
+                              "isBuyOrSell": {
+                                "type": "string",
+                                "example": "BUY"
+                              },
+                              "fiatAmount": {
+                                "type": "integer",
+                                "example": 1500,
+                                "default": 0
+                              },
+                              "commissionDecimal": {
+                                "type": "number",
+                                "example": 0.0075,
+                                "default": 0
+                              },
+                              "fromWalletAddress": {
+                                "type": "string",
+                                "example": "0x000389830900e9000000wd000"
+                              },
+                              "walletLink": {
+                                "type": "string",
+                                "example": "https://kovan.etherscan.io/address/0x000389830900e9000000wd000"
+                              },
+                              "amountPaid": {
+                                "type": "integer",
+                                "example": 0,
+                                "default": 0
+                              },
+                              "conversionPrice": {
+                                "type": "number",
+                                "example": 0.6481680505382411,
+                                "default": 0
+                              },
+                              "cryptoAmount": {
+                                "type": "number",
+                                "example": 964.96,
+                                "default": 0
+                              },
+                              "totalFee": {
+                                "type": "number",
+                                "example": 7.291890568555212,
+                                "default": 0
+                              },
+                              "paymentOption": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "currency": {
+                                      "type": "string",
+                                      "example": "INR"
+                                    },
+                                    "provider": {
+                                      "type": "string",
+                                      "example": "upi"
+                                    },
+                                    "name": {
+                                      "type": "string",
+                                      "example": "UPI"
+                                    },
+                                    "fields": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "name": {
+                                            "type": "string",
+                                            "example": "UPI / VPA Id"
+                                          },
+                                          "value": {
+                                            "type": "string",
+                                            "example": "1234567890@paytm"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "autoExpiresAt": {
+                                "type": "string",
+                                "example": "2020-02-21T03:32:44+00:00"
+                              },
+                              "referenceCode": {
+                                "type": "integer",
+                                "example": 554579,
+                                "default": 0
+                              }
+                            }
+                          },
+                          "webhookResponse": {
+                            "type": "object",
+                            "properties": {
+                              "statusCode": {
+                                "type": "integer",
+                                "example": 405,
+                                "default": 0
+                              },
+                              "body": {
+                                "type": "string",
+                                "example": "<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewport content=\"initial-scale=1, minimum-scale=1, width=device-width\">\n  <title>Error 405 (Method Not Allowed)!!1</title>\n  <style>\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n  </style>\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n  <p><b>405.</b> <ins>That’s an error.</ins>\n  <p>The request method <code>POST</code> is inappropriate for the URL <code>/</code>.  <ins>That’s all we know.</ins>\n"
+                              },
+                              "headers": {
+                                "type": "object",
+                                "properties": {
+                                  "allow": {
+                                    "type": "string",
+                                    "example": "GET, HEAD"
+                                  },
+                                  "date": {
+                                    "type": "string",
+                                    "example": "Fri, 21 Feb 2020 02:32:44 GMT"
+                                  },
+                                  "content-type": {
+                                    "type": "string",
+                                    "example": "text/html; charset=UTF-8"
+                                  },
+                                  "server": {
+                                    "type": "string",
+                                    "example": "gws"
+                                  },
+                                  "content-length": {
+                                    "type": "string",
+                                    "example": "1589"
+                                  },
+                                  "x-xss-protection": {
+                                    "type": "string",
+                                    "example": "0"
+                                  },
+                                  "x-frame-options": {
+                                    "type": "string",
+                                    "example": "SAMEORIGIN"
+                                  },
+                                  "alt-svc": {
+                                    "type": "string",
+                                    "example": "quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000"
+                                  },
+                                  "connection": {
+                                    "type": "string",
+                                    "example": "close"
+                                  }
+                                }
+                              },
+                              "request": {
+                                "type": "object",
+                                "properties": {
+                                  "uri": {
+                                    "type": "object",
+                                    "properties": {
+                                      "protocol": {
+                                        "type": "string",
+                                        "example": "https:"
+                                      },
+                                      "slashes": {
+                                        "type": "boolean",
+                                        "example": true,
+                                        "default": true
+                                      },
+                                      "auth": {},
+                                      "host": {
+                                        "type": "string",
+                                        "example": "google.com"
+                                      },
+                                      "port": {
+                                        "type": "integer",
+                                        "example": 443,
+                                        "default": 0
+                                      },
+                                      "hostname": {
+                                        "type": "string",
+                                        "example": "google.com"
+                                      },
+                                      "hash": {},
+                                      "search": {},
+                                      "query": {},
+                                      "pathname": {
+                                        "type": "string",
+                                        "example": "/"
+                                      },
+                                      "path": {
+                                        "type": "string",
+                                        "example": "/"
+                                      },
+                                      "href": {
+                                        "type": "string",
+                                        "example": "https://google.com/"
+                                      }
+                                    }
+                                  },
+                                  "method": {
+                                    "type": "string",
+                                    "example": "POST"
+                                  },
+                                  "headers": {
+                                    "type": "object",
+                                    "properties": {
+                                      "accept": {
+                                        "type": "string",
+                                        "example": "application/json"
+                                      },
+                                      "content-type": {
+                                        "type": "string",
+                                        "example": "application/json"
+                                      },
+                                      "content-length": {
+                                        "type": "integer",
+                                        "example": 1596,
+                                        "default": 0
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "id": {
+                            "type": "string",
+                            "example": "cd09b401-a036-462e-d09b4-cd09b401"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "401",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Unauthorized": {
+                    "value": "{\n  \"error\": {\n    \"statusCode\": 401,\n    \"name\": \"Unauthorized\",\n    \"message\": \"Authorization Required\"\n  }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "statusCode": {
+                          "type": "integer",
+                          "example": 401,
+                          "default": 0
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Unauthorized"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Authorization Required"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/test-webhook": {
+      "post": {
+        "summary": "Test Webhook",
+        "description": "Test your webhook integration",
+        "operationId": "test-webhook",
+        "parameters": [
+          {
+            "name": "access-token",
+            "in": "header",
+            "description": "Your Access Token, you can generate one using our [Refresh Token](ref:refresh-access-token) endpoint",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "YOUR_ACCESS_TOKEN"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Success": {
+                    "value": "{\n  \"meta\": {\n    \"success\": true,\n    \"webhookURL\": \"www.transak.com\"\n  }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": true,
+                          "default": true
+                        },
+                        "webhookURL": {
+                          "type": "string",
+                          "example": "www.transak.com"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "401",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Unauthorized": {
+                    "value": "{\n  \"error\": {\n    \"statusCode\": 401,\n    \"name\": \"Unauthorized\",\n    \"message\": \"Authorization Required\"\n  }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "statusCode": {
+                          "type": "integer",
+                          "example": 401,
+                          "default": 0
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Unauthorized"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Authorization Required"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/update-webhook-url": {
+      "post": {
+        "summary": "Update Webhook",
+        "description": "Update your webhook URL",
+        "operationId": "update-webhook",
+        "parameters": [
+          {
+            "name": "access-token",
+            "in": "header",
+            "description": "Your Access Token, you can generate one using our [Refresh Token](ref:refresh-access-token) endpoint",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "YOUR_ACCESS_TOKEN"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "webhookURL"
+                ],
+                "properties": {
+                  "webhookURL": {
+                    "type": "string",
+                    "description": "Enter your new webhook URL",
+                    "default": "www.transak.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Success": {
+                    "value": "{\n  \"meta\": {\n    \"success\": true\n  },\n  \"data\": {\n    \"message\": \"Your request to update webhook url is successfully processed.\"\n  }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": true,
+                          "default": true
+                        }
+                      }
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Your request to update webhook url is successfully processed."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Required Argument": {
+                    "value": "{\n  \"error\": {\n    \"statusCode\": 400,\n    \"name\": \"Error\",\n    \"message\": \"webhookURL is a required argument\"\n  }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "statusCode": {
+                          "type": "integer",
+                          "example": 400,
+                          "default": 0
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Error"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "webhookURL is a required argument"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "401",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Unauthorized": {
+                    "value": "{\n  \"error\": {\n    \"statusCode\": 401,\n    \"name\": \"Unauthorized\",\n    \"message\": \"Authorization Required\"\n  }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "statusCode": {
+                          "type": "integer",
+                          "example": 401,
+                          "default": 0
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Unauthorized"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Authorization Required"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/get-user-data": {
+      "get": {
+        "summary": "Get User Data",
+        "description": "Get user data by partnerCustomerId",
+        "operationId": "get-user-data",
+        "parameters": [
+          {
+            "name": "access-token",
+            "in": "header",
+            "description": "Your Access Token, you can generate one using our [Refresh Token](ref:refresh-access-token) endpoint",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "YOUR_ACCESS_TOKEN"
+            }
+          },
+          {
+            "name": "partnerCustomerId",
+            "in": "query",
+            "description": "It is your unique customer ID that will be used to identify the customer that made the transaction once a webhook is called back to your app",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "YOUR_CUSTOMER_ID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Success": {
+                    "value": "{\n  \"meta\": {\n    \"partnerCustomerId\": \"832351\"\n  },\n  \"data\": {\n    \"firstName\": \"Sandeep\",\n    \"lastName\": \"Kumar\",\n    \"kycStatus\": \"APPROVED\",\n    \"email\": \"sandeep@transak.com\",\n    \"dob\": \"1997-06-06T00:00:00.000Z\",\n    \"mobileNumber\": \"+91XXXXXXXXXX\",\n    \"address\": {\n      \"addressLine1\": \"Bengaluru\",\n      \"addressLine2\": \"\",\n      \"state\": \"Karnataka\",\n      \"city\": \"Bengaluru\",\n      \"postCode\": \"560048\",\n      \"country\": \"India\",\n      \"countryCode\": \"IN\"\n    },\n    \"createdAt\": \"2021-06-19T18:25:08.000Z\",\n    \"partnerCustomerId\": \"832351\",\n    \"partnerApiKey\": \"765678-3316-4cbb-8a68-rt7688fgu886\",\n    \"kycDocuments\": [\n      {\n        \"type\": \"addressProof\",\n        \"side\": false,\n        \"url\": \"https://api.transak.com/api/v2/user/get-kyc-image?userId=34234gsf-3erg-42b4-b4e7-435323232&docType=addressProof&side=45343243-b21d-49d0-9f53-343243232\"\n      },\n      {\n        \"type\": \"selfie\",\n        \"side\": false,\n        \"url\": \"https://api.transak.com/api/v2/user/get-kyc-image?userId=34234gsf-3erg-42b4-b4e7-435323232&docType=selfie&side=false\"\n      },\n      {\n        \"type\": \"idProof\",\n        \"side\": \"front\",\n        \"url\": \"https://api.transak.com/api/v2/user/get-kyc-image?userId=34234gsf-3erg-42b4-b4e7-435323232&docType=idProof&side=front\"\n      },\n      {\n        \"type\": \"idProof\",\n        \"side\": \"back\",\n        \"url\": \"https://api.transak.com/api/v2/user/get-kyc-image?userId=34234gsf-3erg-42b4-b4e7-435323232&docType=idProof&side=back\"\n      }\n    ]\n  }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "partnerCustomerId": {
+                          "type": "string",
+                          "example": "832351"
+                        }
+                      }
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "firstName": {
+                          "type": "string",
+                          "example": "Sandeep"
+                        },
+                        "lastName": {
+                          "type": "string",
+                          "example": "Kumar"
+                        },
+                        "kycStatus": {
+                          "type": "string",
+                          "example": "APPROVED"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "sandeep@transak.com"
+                        },
+                        "dob": {
+                          "type": "string",
+                          "example": "1997-06-06T00:00:00.000Z"
+                        },
+                        "mobileNumber": {
+                          "type": "string",
+                          "example": "+91XXXXXXXXXX"
+                        },
+                        "address": {
+                          "type": "object",
+                          "properties": {
+                            "addressLine1": {
+                              "type": "string",
+                              "example": "Bengaluru"
+                            },
+                            "addressLine2": {
+                              "type": "string",
+                              "example": ""
+                            },
+                            "state": {
+                              "type": "string",
+                              "example": "Karnataka"
+                            },
+                            "city": {
+                              "type": "string",
+                              "example": "Bengaluru"
+                            },
+                            "postCode": {
+                              "type": "string",
+                              "example": "560048"
+                            },
+                            "country": {
+                              "type": "string",
+                              "example": "India"
+                            },
+                            "countryCode": {
+                              "type": "string",
+                              "example": "IN"
+                            }
+                          }
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2021-06-19T18:25:08.000Z"
+                        },
+                        "partnerCustomerId": {
+                          "type": "string",
+                          "example": "832351"
+                        },
+                        "partnerApiKey": {
+                          "type": "string",
+                          "example": "765678-3316-4cbb-8a68-rt7688fgu886"
+                        },
+                        "kycDocuments": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "example": "addressProof"
+                              },
+                              "side": {
+                                "type": "boolean",
+                                "example": false,
+                                "default": true
+                              },
+                              "url": {
+                                "type": "string",
+                                "example": "https://api.transak.com/api/v2/user/get-kyc-image?userId=34234gsf-3erg-42b4-b4e7-435323232&docType=addressProof&side=45343243-b21d-49d0-9f53-343243232"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Invalid User Id": {
+                    "value": "{\n  \"error\": {\n    \"statusCode\": 400,\n    \"name\": \"Bad Request\",\n    \"message\": \"Invalid user id\"\n  }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "statusCode": {
+                          "type": "integer",
+                          "example": 400,
+                          "default": 0
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Bad Request"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid user id"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "401",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Unauthorized": {
+                    "value": "{\n  \"error\": {\n    \"statusCode\": 401,\n    \"name\": \"Unauthorized\",\n    \"message\": \"Authorization Required\"\n  }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "statusCode": {
+                          "type": "integer",
+                          "example": 401,
+                          "default": 0
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Unauthorized"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Authorization Required"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/refresh-token": {
+      "post": {
+        "summary": "Refresh Access Token",
+        "description": "Refresh Access Token using api secret",
+        "operationId": "refresh-access-token",
+        "parameters": [
+          {
+            "name": "api-secret",
+            "in": "header",
+            "description": "Your api secret, you can get it from  <a href=\"https://dashboard.transak.com\" target=\"_blank\">Transak Partner Dashboard</a>  for respective environment",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "YOUR_API_SECRET"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "apiKey"
+                ],
+                "properties": {
+                  "apiKey": {
+                    "type": "string",
+                    "description": "Your Api Key which you can get it from <a href=\"https://dashboard.transak.com\" target=\"_blank\">Transak Partner Dashboard</a> for respective environment",
+                    "default": "YOUR_API_KEY"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Success": {
+                    "value": "{\n  \"data\": {\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBUElfS0VZIjoiZjAxMjZjMjctNGY4Yi00YTZiLTkwNmYtZTU3MGEzNDY0MDEwIi\",\n    \"expiresAt\": \"1659505096 // unix timestamp\"\n  }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBUElfS0VZIjoiZjAxMjZjMjctNGY4Yi00YTZiLTkwNmYtZTU3MGEzNDY0MDEwIi"
+                        },
+                        "expiresAt": {
+                          "type": "string",
+                          "example": "1659505096 // unix timestamp"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Inactive Access Token": {
+                    "value": "{\n  \"error\": {\n    \"statusCode\": 400,\n    \"name\": \"Bad Request\",\n    \"message\": \"Your Access Token is Inactive. Please use latest one or generate a new one using our /token end point\"\n  }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "statusCode": {
+                          "type": "integer",
+                          "example": 400,
+                          "default": 0
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Bad Request"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Your Access Token is Inactive. Please use latest one or generate a new one using our /token end point"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "401",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Unauthorized": {
+                    "value": "{\n  \"error\": {\n    \"statusCode\": 401,\n    \"name\": \"Unauthorized\",\n    \"message\": \"Authorization Required\"\n  }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "statusCode": {
+                          "type": "integer",
+                          "example": 401,
+                          "default": 0
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Unauthorized"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Authorization Required"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "x-readme": {
+    "headers": []
+  },
+  "x-readme-fauxas": true
+}
